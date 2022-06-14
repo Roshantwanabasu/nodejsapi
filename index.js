@@ -1,15 +1,20 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const bodyParser = require("body-parser");
 require("dotenv").config();
 
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+extended: true
+}));
 app.use(cors());
 app.set('view engine', 'ejs');
 
 // add router for all routes
 const router = require("./routes/router.js");
-app.use("v1/api", router);
+app.use("/v1/api", router);
 
 // handle unhandled 404 requests
 app.use("*", (req, res) => {
